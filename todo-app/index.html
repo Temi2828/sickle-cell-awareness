@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, responsive to-do list application with local storage functionality">
+    <meta name="keywords" content="todo, task management, productivity, local storage">
+    <meta name="author" content="Todo App">
+    <title>Todo App - Manage Your Tasks</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%234F46E5'/><path d='M30 50 L45 65 L70 35' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">✓</span>
+                    <h1>Todo App</h1>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main" class="main">
+        <div class="container">
+            <!-- Input Section -->
+            <section class="input-section">
+                <form id="todoForm" class="todo-form" aria-label="Add new task">
+                    <div class="input-group">
+                        <input 
+                            type="text" 
+                            id="todoInput" 
+                            class="todo-input" 
+                            placeholder="Add a new task..."
+                            aria-label="Task input"
+                            autocomplete="off"
+                        >
+                        <button type="submit" class="btn btn-add" aria-label="Add task">
+                            <span class="btn-icon">+</span>
+                            <span class="btn-text">Add</span>
+                        </button>
+                    </div>
+                    <div id="errorMessage" class="error-message" role="alert" aria-live="polite"></div>
+                </form>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section">
+                <div class="stat-card">
+                    <div class="stat-label">Total Tasks</div>
+                    <div class="stat-value" id="totalCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Completed</div>
+                    <div class="stat-value stat-completed" id="completedCount">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Pending</div>
+                    <div class="stat-value stat-pending" id="pendingCount">0</div>
+                </div>
+            </section>
+
+            <!-- Filter Section -->
+            <section class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn filter-btn-active" data-filter="all" aria-label="Show all tasks">
+                        All
+                    </button>
+                    <button class="filter-btn" data-filter="active" aria-label="Show active tasks">
+                        Active
+                    </button>
+                    <button class="filter-btn" data-filter="completed" aria-label="Show completed tasks">
+                        Completed
+                    </button>
+                </div>
+                <div class="sort-section">
+                    <label for="sortSelect" class="sort-label">Sort by:</label>
+                    <select id="sortSelect" class="sort-select" aria-label="Sort tasks by">
+                        <option value="date-desc">Newest First</option>
+                        <option value="date-asc">Oldest First</option>
+                        <option value="name-asc">A - Z</option>
+                        <option value="name-desc">Z - A</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Todo List Section -->
+            <section class="todo-section">
+                <div id="emptyState" class="empty-state" aria-label="No tasks">
+                    <div class="empty-icon">📝</div>
+                    <h2>No tasks yet</h2>
+                    <p>Create your first task to get started!</p>
+                </div>
+                <ul id="todoList" class="todo-list" role="list" aria-label="Task list"></ul>
+            </section>
+
+            <!-- Actions Section -->
+            <section class="actions-section" id="actionsSection" style="display: none;">
+                <button id="clearCompleted" class="btn btn-secondary" aria-label="Clear all completed tasks">
+                    <span class="btn-icon">🗑️</span>
+                    Clear Completed
+                </button>
+                <button id="clearAll" class="btn btn-danger" aria-label="Clear all tasks">
+                    <span class="btn-icon">⚠️</span>
+                    Clear All
+                </button>
+                <button id="exportTodos" class="btn btn-secondary" aria-label="Export tasks">
+                    <span class="btn-icon">📥</span>
+                    Export
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Todo App. Built with ❤️ for productivity.</p>
+            <p class="footer-note">Your tasks are saved locally in your browser.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for Confirmations -->
+    <div id="confirmModal" class="modal" role="dialog" aria-labelledby="confirmTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="confirmTitle" class="modal-title">Confirm Action</h2>
+            <p id="confirmMessage" class="modal-message"></p>
+            <div class="modal-buttons">
+                <button id="confirmBtn" class="btn btn-danger">Confirm</button>
+                <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast" class="toast" role="status" aria-live="polite" aria-hidden="true"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
